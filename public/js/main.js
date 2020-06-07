@@ -31,10 +31,10 @@ $(document).ready(function () {
         alert("CEP não encontrado.");
         $("#inputCEP").val("");
         $("#inputAddress").val("");
-        $(document).ready(function(){
+        $(document).ready(function () {
           $("#inputCEP").focus();
         });
-        
+
       }
     }
   })
@@ -74,3 +74,20 @@ function validacaoEmail(field) {
 
   }
 }
+
+class CpfVal(Object){
+
+  function cpfVal(this){
+
+  }
+
+  function gluglu_ieie(this){
+    
+  }
+}
+
+$(document).ready(function(){
+  ("#inputCpf").blur(function(){  //ativa o script jQruery quando o campo perde foco
+    
+  })
+})
