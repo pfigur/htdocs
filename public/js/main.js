@@ -75,19 +75,50 @@ function validacaoEmail(field) {
   }
 }
 
-class CpfVal(Object){
+$(document).ready(function () {
+  $("#inputCpf").blur(function () {
+    var cpf = $(this).val();
+    if (cpf != "") {
+      validaCpf(this);
+    }
+  });
+});
 
-  function cpfVal(this){
+function validaCpf(field) {
+  cpf = field.value.substring();
+  console.log(cpf);
 
+  cpf = cpf.replace(/\D+/g, '');
+  if (cpf != "" &&
+    cpf.length == 11 &&
+    trollCheck(cpf) != true
+  ) {
+    alert("tá indo...")
   }
+  else {
+    document.getElementById("inputCpf").innerHTML = "<font color='red'>CPF inválido </font>";
+    $("#inputCpf").val("");
+    alert("CPF invalido");
+    $(document).ready(function () {
+      $("#inputCpf").focus();
+    })
 
-  function gluglu_ieie(this){
-    
   }
 }
 
-$(document).ready(function(){
-  ("#inputCpf").blur(function(){  //ativa o script jQruery quando o campo perde foco
-    
-  })
-})
+function trollCheck() {
+  console.log(cpf);
+  troll = true;
+  i = 0;
+  while (i < 11) {
+    if (cpf[0] == cpf[i]) {
+      troll = true;
+    }
+    else {
+      troll = false;
+      break;
+    }
+    i++;
+  }
+  return troll;
+}
