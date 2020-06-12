@@ -43,9 +43,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#inputEmail").blur(function () {
     var mail = $(this).val();
-    if (mail != "") {
-      validacaoEmail(this);
-    }
+    if (mail != "") validacaoEmail(this);
     else {
     }
   });
@@ -65,49 +63,63 @@ function validacaoEmail(field) {
     (dominio.lastIndexOf(".") < dominio.length - 1)) {
   }
   else {
-    document.getElementById("inputEmail").innerHTML = "<font color='red'>Email inválido </font>";
-    $("#inputEmail").val("");
-    alert("E-mail invalido");
-    $(document).ready(function () {
-      $("#inputEmail").focus();
-    })
-
+    mailError(this);
   }
 }
 
+function mailError(field) {
+  document.getElementById("inputEmail").innerHTML = "<font color='red'>Email inválido </font>";
+  $("#inputEmail").val("");
+  alert("E-mail invalido");
+  $(document).ready(function () {
+    $("#inputEmail").focus();
+  })
+}
 $(document).ready(function () {
   $("#inputCpf").blur(function () {
     var cpf = $(this).val();
-    if (cpf != "") {
-      validaCpf(this);
-    }
+    if (cpf != "") validaCpf(this);
+    else cpfError(this);
   });
 });
 
 function validaCpf(field) {
-  cpf = field.value.substring();
-  console.log(cpf);
-
-  cpf = cpf.replace(/\D+/g, '');
+  cpf = field.value.substring(0, field.value.length);
+  cpf = cpf.replace(/\D/g, '');
   if (cpf != "" &&
     cpf.length == 11 &&
-    trollCheck(cpf) != true
-  ) {
-    alert("tá indo...")
+    trollCheck(cpf) != true) {
+    chk1 = cpf.substring(0, 9);
+    chk2 = cpf.substring(0, 10);
+    sum1 = 0;
+    sum2 = 0;
+    while (i < 9) {
+      sum1 = sum1 + (chk1[i] * ((chk1.length + 1) - i));
+      i++;
+    }
+    i = 0;
+    while (i < 10) {
+      sum2 = sum2 + (chk2[i] * ((chk2.length + 1) - i));
+      i++;
+    }
+    i = 0;
+    chk1 = (sum1 * 10) % 11;
+    chk2 = (sum2 * 10) % 11;
+    if (chk1 != cpf[9] || chk2 != cpf[10]) cpfError(this);
   }
-  else {
-    document.getElementById("inputCpf").innerHTML = "<font color='red'>CPF inválido </font>";
-    $("#inputCpf").val("");
-    alert("CPF invalido");
-    $(document).ready(function () {
-      $("#inputCpf").focus();
-    })
+  else cpfError(this);
+}
 
-  }
+function cpfError(field) {
+  document.getElementById("inputCpf").innerHTML = "<font color='red'>CPF inválido </font>";
+  $("#inputCpf").val("");
+  alert("CPF invalido");
+  $(document).ready(function () {
+    $("#inputCpf").focus();
+  })
 }
 
 function trollCheck() {
-  console.log(cpf);
   troll = true;
   i = 0;
   while (i < 11) {
@@ -120,5 +132,6 @@ function trollCheck() {
     }
     i++;
   }
+  i = 0;
   return troll;
 }
